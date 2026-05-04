@@ -553,6 +553,7 @@ export function buildBicep(d) {
     allowVirtualNetworkAccess: true
     allowForwardedTraffic: true
   }
+  dependsOn: [spokeVNets]
 }
 
 resource s2s_${bi}_${bj}_ba 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2023-11-01' = {
@@ -563,6 +564,7 @@ resource s2s_${bi}_${bj}_ba 'Microsoft.Network/virtualNetworks/virtualNetworkPee
     allowVirtualNetworkAccess: true
     allowForwardedTraffic: true
   }
+  dependsOn: [spokeVNets]
 }`
       );
     }
@@ -755,6 +757,7 @@ resource lb_${lb.name.replace(/\W/g, '_')} 'Microsoft.Network/loadBalancers@2023
   name: '${lb.name}'
   location: location
   sku: { name: '${lb.sku}' }
+  dependsOn: [spokeVNets]
   properties: {
     frontendIPConfigurations: [
       {
