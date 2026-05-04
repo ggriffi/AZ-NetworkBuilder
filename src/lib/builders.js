@@ -1122,7 +1122,7 @@ $EscapedPsk = $Psk.Replace("'", "''")
 $ParamBody  = @'
 ${paramContent}
 '@
-Set-Content -Path $ParamFile -Value ($ParamBody + "param psk = '$EscapedPsk'")
+Set-Content -Path $ParamFile -Value ($ParamBody + "\`nparam psk = '$EscapedPsk'")
 
 Write-Host "Ensuring resource group: $ResourceGroup" -ForegroundColor Cyan
 az group create --name $ResourceGroup --location $Location | Out-Null
