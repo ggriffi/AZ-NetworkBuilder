@@ -9,6 +9,7 @@
   --dim: #8890b0;
   --green: #4ec94e;
   --red: #f04040;
+  --yellow: #f0c040;
 }
 
 * {
@@ -59,7 +60,7 @@ body {
 /* Layout */
 .layout {
   display: grid;
-  grid-template-columns: 480px 1fr;
+  grid-template-columns: 520px 1fr;
   flex: 1;
   overflow: hidden;
 }
@@ -84,6 +85,54 @@ body {
   margin-bottom: 12px;
   padding-bottom: 5px;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Section enable toggle (next to title) */
+.section-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--dim);
+  cursor: pointer;
+  user-select: none;
+}
+
+.section-toggle input[type='checkbox'] {
+  accent-color: var(--accent);
+  cursor: pointer;
+  width: 13px;
+  height: 13px;
+}
+
+/* Disabled section state */
+.section-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Inline checkbox label */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: var(--dim);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type='checkbox'] {
+  accent-color: var(--accent);
+  cursor: pointer;
+  width: 13px;
+  height: 13px;
 }
 
 .field {
@@ -118,6 +167,11 @@ body {
 .field input::placeholder {
   color: var(--dim);
   opacity: 0.5;
+}
+
+.field select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .row2 {
@@ -169,6 +223,52 @@ body {
   border-color: var(--accent);
 }
 
+/* Load Balancer rows */
+.lb-header {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.7fr 1.2fr 1.1fr 0.6fr 0.6fr 24px;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+
+.lb-header span {
+  font-size: 0.7rem;
+  color: var(--dim);
+}
+
+.lb-row {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.7fr 1.2fr 1.1fr 0.6fr 0.6fr 24px;
+  gap: 5px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.lb-row input,
+.lb-row select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 5px 6px;
+  border-radius: 4px;
+  font-size: 0.76rem;
+  width: 100%;
+  font-family: inherit;
+}
+
+.lb-row input:focus,
+.lb-row select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.lb-row input::placeholder {
+  color: var(--dim);
+  opacity: 0.45;
+  font-size: 0.7rem;
+}
+
+/* Shared remove / add buttons */
 .btn-x {
   background: none;
   border: none;
@@ -230,6 +330,9 @@ body {
   font-family: inherit;
   margin-bottom: -1px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .tab.active {
@@ -239,6 +342,33 @@ body {
 
 .tab:hover:not(.active) {
   color: var(--text);
+}
+
+/* Validate tab badges */
+.tab-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.tab-badge-error {
+  background: rgba(240, 64, 64, 0.2);
+  color: var(--red);
+  border: 1px solid rgba(240, 64, 64, 0.4);
+}
+
+.tab-badge-warn {
+  background: rgba(240, 192, 64, 0.15);
+  color: var(--yellow);
+  border: 1px solid rgba(240, 192, 64, 0.35);
+}
+
+.tab-badge-ok {
+  background: rgba(78, 201, 78, 0.15);
+  color: var(--green);
+  border: 1px solid rgba(78, 201, 78, 0.35);
 }
 
 .output-actions {

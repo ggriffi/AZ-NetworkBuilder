@@ -26,6 +26,45 @@ export const DEFAULT_STATE = {
   ipsecEnc: 'AES256',
   ipsecInt: 'SHA256',
   saLifetime: '27000',
+
+  // Azure Firewall
+  firewall: {
+    enabled: false,
+    name: 'afw-hub',
+    sku: 'Standard',
+    policyName: 'afwp-hub',
+    subnetPrefix: '10.220.0.0/26',
+    pipName: 'pip-afw-hub',
+    forceRoute: true,
+  },
+
+  // NSGs on spoke subnets
+  nsgPerSpoke: false,
+
+  // Load Balancers
+  loadBalancers: [],
+
+  // Azure Front Door
+  frontDoor: {
+    enabled: false,
+    profileName: 'afd-profile',
+    sku: 'Standard_AzureFrontDoor',
+    endpointName: 'afd-endpoint',
+    originHostname: '',
+    wafEnabled: false,
+    wafPolicyName: 'wafpolicy',
+  },
+};
+
+export const DEFAULT_LB = {
+  name: '',
+  type: 'Internal',
+  sku: 'Standard',
+  spoke: '',
+  frontendIp: '',
+  port: 80,
+  probePort: 80,
+  protocol: 'Tcp',
 };
 
 export const LOCATIONS = [
@@ -52,6 +91,12 @@ export const GW_SKUS = [
   { value: 'VpnGw1', label: 'VpnGw1 (no zone redundancy)' },
   { value: 'VpnGw2', label: 'VpnGw2 (no zone redundancy)' },
   { value: 'VpnGw3', label: 'VpnGw3 (no zone redundancy)' },
+];
+
+export const FW_SKUS = ['Standard', 'Premium'];
+export const AFD_SKUS = [
+  { value: 'Standard_AzureFrontDoor', label: 'Standard' },
+  { value: 'Premium_AzureFrontDoor', label: 'Premium (required for WAF)' },
 ];
 
 export const DH_GROUPS = ['DHGroup14', 'DHGroup2', 'DHGroup24', 'ECP256', 'ECP384'];

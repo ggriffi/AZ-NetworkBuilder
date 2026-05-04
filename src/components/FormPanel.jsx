@@ -1,4 +1,7 @@
 import SpokeRows from './SpokeRows.jsx';
+import FirewallSection from './FirewallSection.jsx';
+import LoadBalancerRows from './LoadBalancerRows.jsx';
+import FrontDoorSection from './FrontDoorSection.jsx';
 import {
   LOCATIONS,
   GW_SKUS,
@@ -49,9 +52,7 @@ export default function FormPanel({ state, onChange }) {
   }
 
   function text(field, placeholder) {
-    return (
-      <input value={state[field]} onChange={set(field)} placeholder={placeholder} />
-    );
+    return <input value={state[field]} onChange={set(field)} placeholder={placeholder} />;
   }
 
   return (
@@ -89,12 +90,44 @@ export default function FormPanel({ state, onChange }) {
 
       {/* Spokes */}
       <div className="section">
-        <div className="section-title">Spoke Networks</div>
+        <div className="section-title">
+          Spoke Networks
+          <label className="section-toggle">
+            <input
+              type="checkbox"
+              checked={state.nsgPerSpoke}
+              onChange={(e) => onChange({ ...state, nsgPerSpoke: e.target.checked })}
+            />
+            NSG per spoke
+          </label>
+        </div>
         <SpokeRows
           spokes={state.spokes}
           onChange={(spokes) => onChange({ ...state, spokes })}
         />
       </div>
+
+      {/* Firewall */}
+      <FirewallSection
+        firewall={state.firewall}
+        onChange={(firewall) => onChange({ ...state, firewall })}
+      />
+
+      {/* Load Balancers */}
+      <div className="section">
+        <div className="section-title">Load Balancers</div>
+        <LoadBalancerRows
+          loadBalancers={state.loadBalancers}
+          spokes={state.spokes}
+          onChange={(loadBalancers) => onChange({ ...state, loadBalancers })}
+        />
+      </div>
+
+      {/* Front Door */}
+      <FrontDoorSection
+        frontDoor={state.frontDoor}
+        onChange={(frontDoor) => onChange({ ...state, frontDoor })}
+      />
 
       {/* VPN Gateway */}
       <div className="section">
@@ -170,11 +203,7 @@ export default function FormPanel({ state, onChange }) {
           />
         </div>
         <Field label="SA Lifetime (seconds)">
-          <input
-            type="number"
-            value={state.saLifetime}
-            onChange={set('saLifetime')}
-          />
+          <input type="number" value={state.saLifetime} onChange={set('saLifetime')} />
         </Field>
       </div>
     </div>
