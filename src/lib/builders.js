@@ -1093,6 +1093,9 @@ export function buildDeploy(d) {
   const paramContent = rawParam.slice(0, rawParam.lastIndexOf('\n// psk')).trimEnd();
 
   return `#Requires -Version 7.0
+# Usage (PowerShell):  pwsh ./Deploy-Network.ps1 -ResourceGroup "my-rg"
+# Usage (bash/Linux):  pwsh ./Deploy-Network.ps1 -ResourceGroup "my-rg"
+# Do NOT run with bash or sh directly — this is a PowerShell script.
 param(
     [Parameter(Mandatory)] [string]$ResourceGroup,
     [string]$Location = '${d.location}'

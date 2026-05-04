@@ -214,11 +214,13 @@ export function buildValidationReport(state) {
   if (state.firewall.enabled) estMins += 5;
   if (state.frontDoor.enabled) estMins += 3;
 
+  // psk is @secure() and required — pass a placeholder for what-if (no real value is used)
   const whatIf = [
     'az deployment group what-if \\',
     `  --resource-group "${d.rg}" \\`,
     '  --template-file hub-spoke-vpn.bicep \\',
-    '  --parameters hub-spoke-vpn.bicepparam',
+    '  --parameters hub-spoke-vpn.bicepparam \\',
+    '  --parameters psk=placeholder',
   ].join('\n');
 
   const pad = (k, v) => `  ${k.padEnd(20)}: ${v}`;
@@ -259,7 +261,7 @@ export function buildValidationReport(state) {
     '',
     `WHAT-IF PREVIEW`,
     HR,
-    '  Preview all changes without deploying:',
+    '  Preview all changes without deploying (psk=placeholder is safe for what-if):',
     '',
     ...whatIf.split('\n').map((l) => `  ${l}`),
     '',
