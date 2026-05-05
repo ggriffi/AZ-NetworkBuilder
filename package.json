@@ -1,10 +1,13 @@
 {
   "name": "network-builder",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
+  "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
+    "dev:electron": "concurrently -k -n VITE,ELECTRON -c cyan,yellow \"vite --port 5173\" \"wait-on http://localhost:5173 && electron . --dev --port 5173\"",
     "build": "vite build",
+    "dist": "vite build && electron-builder",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -13,6 +16,30 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.4.2"
+    "concurrently": "^9.0.1",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "vite": "^5.4.2",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.azure.network-builder",
+    "productName": "Azure Network Builder",
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }
