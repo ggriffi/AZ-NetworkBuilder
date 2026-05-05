@@ -519,33 +519,48 @@ function buildTools(state) {
 export default function DiagnosticsPanel({ state, onRun, isRunning }) {
   const isElectron = !!window.electronAPI
   const tools = buildTools(state)
+  const [activeSection, setActiveSection] = useState(tools[0].section)
+
+  const currentSection = tools.find((t) => t.section === activeSection) ?? tools[0]
 
   return (
-    <div className="diag-panel">
-      {!isElectron && (
-        <div className="diag-notice">
-          Diagnostics require the desktop app (Electron). In browser mode the forms are read-only.
-        </div>
-      )}
+    <div className="diag-layout">
+      {/* Sidebar */}
+      <nav className="diag-sidebar">
+        {tools.map(({ section }) => (
+          <button
+            key={section}
+            className={`diag-sidebar-btn${activeSection === section ? ' active' : ''}`}
+            onClick={() => setActiveSection(section)}
+          >
+            {section}
+          </button>
+        ))}
+      </nav>
 
-      {tools.map(({ section, cards }) => (
-        <div key={section} className="diag-section">
-          <div className="diag-section-title">{section}</div>
-          <div className="diag-grid">
-            {cards.map((card) => (
-              <DiagCard
-                key={card.title}
-                title={card.title}
-                description={card.description}
-                fields={card.fields}
-                buildCmd={card.buildCmd}
-                onRun={isElectron ? onRun : () => {}}
-                isRunning={isRunning || !isElectron}
-              />
-            ))}
+      {/* Content */}
+      <div className="diag-content">
+        {!isElectron && (
+          <div className="diag-notice">
+            Diagnostics require the desktop app (Electron). In browser mode the forms are read-only.
           </div>
+        )}
+
+        <div className="diag-section-title">{currentSection.section}</div>
+        <div className="diag-grid">
+          {currentSection.cards.map((card) => (
+            <DiagCard
+              key={card.title}
+              title={card.title}
+              description={card.description}
+              fields={card.fields}
+              buildCmd={card.buildCmd}
+              onRun={isElectron ? onRun : () => {}}
+              isRunning={isRunning || !isElectron}
+            />
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   )
 }

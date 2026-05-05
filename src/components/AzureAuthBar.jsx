@@ -1,4 +1,7 @@
-export default function AzureAuthBar({ account, subscriptions, onSignIn, onSelectSub, isRunning }) {
+import { useState } from 'react'
+
+export default function AzureAuthBar({ account, subscriptions, onSignIn, onSelectSub, isRunning, psk, onPskChange }) {
+  const [pskVisible, setPskVisible] = useState(false)
   const displayName = account?.user?.name ?? account?.name ?? null
   const currentSubId = account?.id ?? ''
 
@@ -25,6 +28,25 @@ export default function AzureAuthBar({ account, subscriptions, onSignIn, onSelec
       </div>
 
       <div className="auth-right">
+        {/* VPN PSK */}
+        <div className="auth-psk-wrap">
+          <span className="auth-psk-label">VPN PSK</span>
+          <input
+            className="auth-psk-input"
+            type={pskVisible ? 'text' : 'password'}
+            value={psk}
+            onChange={(e) => onPskChange(e.target.value)}
+            placeholder="Pre-shared key"
+          />
+          <button
+            className="btn btn-sm btn-secondary"
+            onClick={() => setPskVisible((v) => !v)}
+            title={pskVisible ? 'Hide PSK' : 'Show PSK'}
+          >
+            {pskVisible ? '🙈' : '👁'}
+          </button>
+        </div>
+
         {subscriptions.length > 0 && (
           <select
             className="auth-sub-select"

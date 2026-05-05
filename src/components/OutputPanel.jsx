@@ -29,9 +29,8 @@ function TabLabel({ tabKey, label, state }) {
   return <>{label} <span className="tab-badge tab-badge-ok">✓</span></>
 }
 
-export default function OutputPanel({ outputs, status, onGenerate, state, onDeploy, isRunning }) {
+export default function OutputPanel({ outputs, status, onGenerate, state, onDeploy, isRunning, psk, onPskChange }) {
   const [activeTab, setActiveTab] = useState('ps1')
-  const [psk, setPsk] = useState('')
   const [pskVisible, setPskVisible] = useState(false)
 
   const isValidateTab = activeTab === 'validate'
@@ -109,8 +108,8 @@ export default function OutputPanel({ outputs, status, onGenerate, state, onDepl
               className="deploy-psk-input"
               type={pskVisible ? 'text' : 'password'}
               value={psk}
-              onChange={(e) => setPsk(e.target.value)}
-              placeholder="Pre-shared key (injected via stdin)"
+              onChange={(e) => onPskChange?.(e.target.value)}
+              placeholder="Pre-shared key (set in auth bar or here)"
             />
             <button
               className="btn btn-secondary btn-sm"

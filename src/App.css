@@ -128,6 +128,30 @@ body {
 }
 .auth-sub-select:focus { outline: none; border-color: var(--accent); }
 
+.auth-psk-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.auth-psk-label {
+  color: var(--dim);
+  font-size: 0.73rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.auth-psk-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.77rem;
+  font-family: inherit;
+  width: 140px;
+}
+.auth-psk-input:focus { outline: none; border-color: var(--accent); }
+.auth-psk-input::placeholder { color: var(--dim); opacity: 0.5; }
+
 /* ── Button variants ─────────────────────────────────────────────────────── */
 
 .btn-sm { padding: 3px 10px; font-size: 0.74rem; }
@@ -657,7 +681,46 @@ body {
 
 /* ── Diagnostics panel ───────────────────────────────────────────────────── */
 
-.diag-panel {
+.diag-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.diag-sidebar {
+  width: 180px;
+  flex-shrink: 0;
+  background: #12152a;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.diag-sidebar-btn {
+  display: block;
+  width: 100%;
+  padding: 9px 18px;
+  text-align: left;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  color: var(--dim);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: inherit;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+}
+.diag-sidebar-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.diag-sidebar-btn.active {
+  color: #60b8ff;
+  border-left-color: #60b8ff;
+  background: rgba(96, 184, 255, 0.07);
+}
+
+.diag-content {
   flex: 1;
   overflow-y: auto;
   padding: 20px 24px;

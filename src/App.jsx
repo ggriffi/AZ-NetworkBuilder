@@ -43,6 +43,7 @@ export default function App() {
   // ── Azure auth state ───────────────────────────────────────────────────────
   const [azAccount,     setAzAccount]     = useState(null)
   const [subscriptions, setSubscriptions] = useState([])
+  const [psk,           setPsk]           = useState('')
 
   // Persist builder state
   useEffect(() => {
@@ -165,6 +166,8 @@ export default function App() {
           onSignIn={handleSignIn}
           onSelectSub={handleSelectSub}
           isRunning={isRunning}
+          psk={psk}
+          onPskChange={setPsk}
         />
       )}
 
@@ -204,6 +207,8 @@ export default function App() {
               state={state}
               onDeploy={IS_ELECTRON ? runScript : null}
               isRunning={isRunning}
+              psk={psk}
+              onPskChange={setPsk}
             />
           </div>
         ) : (
